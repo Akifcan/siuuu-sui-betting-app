@@ -1,3 +1,5 @@
+import networks from "@/networks"
+
 interface MyBetsProps {
   bets: string[]
 }
@@ -14,7 +16,7 @@ const MyBets = ({ bets }: MyBetsProps) => {
   }
 
   const openContractTransactions = () => {
-    const url = `https://suiscan.xyz/testnet/object/0x4f34bf51146c28a8cfce3376dd255a637df43d3380fd58803668517ee410f659/tx-blocks`
+    const url = `https://suiscan.xyz/testnet/object/${networks.testnet.variables.contractObjectId}/tx-blocks`
     window.open(url, '_blank')
   }
 

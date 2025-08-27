@@ -74,3 +74,22 @@ export const createBatchBetsTransaction = (
   return transaction
 }
 
+// Send funds from contract to a specific address
+export const createSendFundsTransaction = (recipientAddress: string, amount: number): Transaction => {
+  const transaction = new Transaction()
+
+  // Convert amount from SUI to MIST
+  const amountInMist = BigInt(amount * Number(MIST_PER_SUI))
+
+  transaction.moveCall({
+    target: `${networks.testnet.variables.packageId}::siuuu::send_funds`,
+    arguments: [
+      transaction.object(networks.testnet.variables.contractObjectId),
+      transaction.pure.address(recipientAddress),
+      transaction.pure.u64(amountInMist),
+    ],
+  })
+
+  return transaction
+}
+

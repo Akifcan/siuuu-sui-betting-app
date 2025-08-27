@@ -7,6 +7,7 @@ import BetSlip from './components/BetSlip'
 import Dialog from './components/Dialog'
 import WalletConnection from './components/WalletConnection'
 import MyBets from './components/MyBets'
+import MatchSimulation from './components/MatchSimulation'
 import { createBatchBetsTransaction } from './contracts/betting'
 
 function App() {
@@ -32,6 +33,9 @@ function App() {
     message: '',
     type: 'info'
   })
+  const [isSimulating, setIsSimulating] = useState(false)
+  const [simulatingMatch, setSimulatingMatch] = useState<number | null>(null)
+  const [userBet, setUserBet] = useState<{ matchIndex: number; betType: '1' | 'X' | '2'; odds: number; stake: number } | null>(null)
 
   const odds = {
     '1': 2.5,
@@ -157,10 +161,26 @@ function App() {
             const suiscanLink = `https://suiscan.xyz/testnet/tx/${txDigest}`
             showDialog(
               'Success!', 
-              `${betSlip.bets.length} bet(s) placed successfully!\nTotal: ${betSlip.totalStake.toFixed(2)} SUI\nPotential Win: ${betSlip.potentialWin.toFixed(2)} SUI`,
+              `${betSlip.bets.length} bet(s) placed successfully!\nTotal: ${betSlip.totalStake.toFixed(2)} SUI\nPotential Win: ${betSlip.potentialWin.toFixed(2)} SUI\n\nMatch simulation will start now...`,
               'success',
               { url: suiscanLink, text: 'View on SuiScan' }
             )
+            
+            // Auto-close dialog after 3 seconds to show simulation
+            setTimeout(() => {
+              setDialog(prev => ({ ...prev, isOpen: false }))
+            }, 3000)
+            
+            // Start simulation for the first bet after dialog closes
+            if (betSlip.bets.length > 0) {
+              const firstBet = betSlip.bets[0]
+              setUserBet(firstBet)
+              setTimeout(() => {
+                setSimulatingMatch(firstBet.matchIndex)
+                setIsSimulating(true)
+              }, 3500)
+            }
+            
             setBetSlip({ bets: [], totalStake: 0, potentialWin: 0 })
             setStakes({})
           },
@@ -174,6 +194,18 @@ function App() {
       console.error('Error creating transaction:', error)
       showDialog('Error', 'Failed to create betting transaction. Please try again.', 'error')
     }
+  }
+
+  const handleSimulationComplete = (winner: '1' | 'X' | '2') => {
+    console.log('Match simulation completed. Winner:', winner)
+    setIsSimulating(false)
+    setSimulatingMatch(null)
+  }
+
+  const closeSimulation = () => {
+    setIsSimulating(false)
+    setSimulatingMatch(null)
+    setUserBet(null)
   }
 
   return (
@@ -213,6 +245,16 @@ function App() {
         type={dialog.type}
         link={dialog.link}
       />
+      
+      {isSimulating && simulatingMatch !== null && userBet && (
+        <MatchSimulation
+          match={fixture.matches[simulatingMatch]}
+          userBet={userBet}
+          onSimulationComplete={handleSimulationComplete}
+          onClose={closeSimulation}
+          onShowDialog={showDialog}
+        />
+      )}
     </div>
   )
 }
