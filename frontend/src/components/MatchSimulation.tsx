@@ -116,7 +116,7 @@ function MatchSimulation({ match, userBet, onSimulationComplete, onClose, onShow
 
     try {
       // Create transaction to send winnings to user's wallet with gas sponsorship
-      const transaction = createSendFundsTransaction(
+      const transaction = (createSendFundsTransaction as any)(
         currentAccount.address,
         betResult.winAmount,
         networks.testnet.variables.sponsorAddress
