@@ -20,7 +20,7 @@ function RegisterEnokiWallets() {
 			},
 			client,
 			network,
-		});
+		} as any);
  
 		return unregister;
 	}, [client, network]);
