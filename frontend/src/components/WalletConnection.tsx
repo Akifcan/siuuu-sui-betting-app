@@ -63,7 +63,7 @@ function WalletConnection() {
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               <span className="text-sm font-medium text-green-600">Connected</span>
             </div>
-            <ConnectButton
+            <ConnectButton 
               connectText="Connect Sui Wallet"
               className="bg-[#4DA2FF] hover:bg-[#C0E6FF] hover:text-[#011829] text-white font-medium px-4 py-2 rounded-lg transition-colors duration-200"
             />

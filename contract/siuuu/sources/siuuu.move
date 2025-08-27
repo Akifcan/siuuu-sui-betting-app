@@ -1,5 +1,5 @@
 /// Module: siuuu
-module siuuu::siuuu {
+module 0x0::siuuu {
     use sui::coin::Coin;
     use sui::sui::SUI;
     use sui::balance::Balance;
@@ -8,6 +8,7 @@ module siuuu::siuuu {
     const EInvalidMatchId: u64 = 0;
     const EInvalidBetType: u64 = 1;
     const EInsufficientAmount: u64 = 2;
+    const EInsufficientBalance: u64 = 3;
 
     // Bet types
     const BET_TYPE_HOME: u8 = 1;
@@ -85,6 +86,26 @@ module siuuu::siuuu {
         
         // Increment bet counter
         contract.bet_counter = contract.bet_counter + 1;
+    }
+
+    // Function to send specific amount from contract to an address
+    public fun send_funds(
+        contract: &mut BettingContract,
+        recipient: address,
+        amount: u64,
+        ctx: &mut sui::tx_context::TxContext
+    ) {
+        // Check if contract has sufficient balance
+        let contract_balance = sui::balance::value(&contract.total_pool);
+        assert!(contract_balance >= amount, EInsufficientBalance);
+        assert!(amount > 0, EInsufficientAmount);
+
+        // Split the requested amount from the contract's balance
+        let payment_balance = sui::balance::split(&mut contract.total_pool, amount);
+        
+        // Convert balance to coin and transfer to recipient
+        let payment_coin = sui::coin::from_balance(payment_balance, ctx);
+        sui::transfer::public_transfer(payment_coin, recipient);
     }
 
 }
