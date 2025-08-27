@@ -19,7 +19,7 @@ export const useEnokiSponsorship = () => {
       })
       
       // 2. Request sponsorship from backend
-      const sponsorResponse = await fetch('http://localhost:3005/app/siuuu-betting-app/enoki/sponsor', {
+      const sponsorResponse = await fetch(`${import.meta.env.VITE_API_URL}/app/siuuu-betting-app/enoki/sponsor`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export const useEnokiSponsorship = () => {
       }
       
       // 4. Execute sponsored transaction
-      const executeResponse = await fetch(`http://localhost:3005/app/siuuu-betting-app/enoki/finalize/${digest}`, {
+      const executeResponse = await fetch(`${import.meta.env.VITE_API_URL}/app/siuuu-betting-app/enoki/finalize/${digest}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
