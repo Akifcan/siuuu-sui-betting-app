@@ -6,13 +6,14 @@ A decentralized betting platform for football matches built on the Sui blockchai
 
 ## Features
 
+- 🔐 Google authentication.
+- ⛽ Gas sponsorship via **enoki** for reward transactions
 - ⚽ Football match betting (Home/Away/Draw)
 - 💰 Betting with SUI tokens
 - 📊 Bet history tracking
 - 🔐 Sui wallet integration
 - 🏆 Turkish Super League matches
 - 🎮 Real-time match simulation with live scoring
-- ⛽ Gas sponsorship for reward transactions
 - 🎯 Automatic reward distribution for winning bets
 - 📱 Interactive match visualization with team logos
 - 🏁 Full match progress tracking (90 minutes simulation)
