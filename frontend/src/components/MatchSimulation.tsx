@@ -4,6 +4,7 @@ import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, A
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { createSendFundsTransaction } from '../contracts/betting'
+import networks from '../networks'
 
 interface MatchSimulationProps {
   match: {
@@ -114,10 +115,11 @@ function MatchSimulation({ match, userBet, onSimulationComplete, onClose, onShow
     }
 
     try {
-      // Create transaction to send winnings to user's wallet
+      // Create transaction to send winnings to user's wallet with gas sponsorship
       const transaction = createSendFundsTransaction(
         currentAccount.address,
-        betResult.winAmount
+        betResult.winAmount,
+        networks.testnet.variables.sponsorAddress
       )
 
       // Execute the transaction
