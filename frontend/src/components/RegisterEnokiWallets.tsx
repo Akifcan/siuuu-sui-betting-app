@@ -11,11 +11,11 @@ function RegisterEnokiWallets() {
 		if (!isEnokiNetwork(network)) return;
  
 		const { unregister } = registerEnokiWallets({
-			apiKey: 'enoki_public_4cadf20f88ad92b1ee7a644902505517',
+			apiKey: import.meta.env.VITE_ENOKI_PUBLIC_KEY,
 			providers: {
 				// Provide the client IDs for each of the auth providers you want to use:
 				google: {
-					clientId: '989645441623-aqepkn65v75rqj01mnie982irt13t3ec.apps.googleusercontent.com',
+					clientId: import.meta.env.VITE_GOOGLE_CLIENT_ID,
 				},
 			},
 			client,

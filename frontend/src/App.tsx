@@ -145,7 +145,7 @@ function App() {
       // Create batch transaction for all bets
       const transaction = createBatchBetsTransaction(betSlip.bets)
 
-      // Execute the transaction
+      // Execute the transaction (normal, not sponsored)
       signAndExecuteTransaction(
         {
           transaction,
