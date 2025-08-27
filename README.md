@@ -11,6 +11,11 @@ A decentralized betting platform for football matches built on the Sui blockchai
 - 📊 Bet history tracking
 - 🔐 Sui wallet integration
 - 🏆 Turkish Super League matches
+- 🎮 Real-time match simulation with live scoring
+- ⛽ Gas sponsorship for reward transactions
+- 🎯 Automatic reward distribution for winning bets
+- 📱 Interactive match visualization with team logos
+- 🏁 Full match progress tracking (90 minutes simulation)
 
 ## Project Structure
 
@@ -65,6 +70,7 @@ yarn dev
 - **Wallet:** Sui Wallet Kit
 
 ![SIUU-BET Logo](https://i.imgur.com/GR81ahh.png)
+![Bet](https://i.imgur.com/N7IDNaK.png)
 ---
 ![SIUU-BET Logo](https://i.imgur.com/8Ls4GyM.jpeg)
 
